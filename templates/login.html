@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="form-box">
+    <h2 class="login">Login</h2>
+
+    <form method="POST">
+        <input type="email" name="email" placeholder="Enter Email" required>
+
+        <input type="password" name="password" placeholder="Enter Password" required>
+
+        <button type="submit">Login</button><br><br>
+    </form>
+
+    <div class="forgot-container">
+    <a href="/forgot" class="forgot-link">Forgot Password?</a>
+</div><br>
+
+    <p class="link-text">
+        Don't have an account? 
+        <a href="/register">Register here</a>
+    </p>
+</div>
+
+{% endblock %}

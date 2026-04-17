@@ -1,0 +1,437 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== FULL HEIGHT ===== */
+html, body {
+    height: 100%;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #1f2937, #374151);
+    padding: 15px 40px;
+    color: white;
+}
+
+.navbar h2 {
+    font-size: 22px;
+}
+
+/* NAV RIGHT */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-right span {
+    font-size: 15px;
+    font-weight: 600;
+    background: #4b5563;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.nav-right a {
+    font-size: 15px;
+    color: #e5e7eb;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+.nav-right a:hover {
+    background: #4b5563;
+    color: #fff;
+}
+
+/* LOGOUT BUTTON */
+.nav-right a:last-child {
+    background: #ef4444;
+    color: white;
+}
+
+.nav-right a:last-child:hover {
+    background: #dc2626;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    width: 100%;
+    margin: 30px 0;
+    padding: 30px 80px;   /* 🔥 increased spacing */
+    flex: 1;
+}
+
+/* ===== FORM BOX (LOGIN / REGISTER / WELCOME) ===== */
+.form-box {
+    background: white;
+    padding: 35px;
+    border-radius: 10px;
+    
+    width: 600px;          /* 🔥 increased */
+    max-width: 90%;
+
+    margin: 60px auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+
+    text-align: center;
+}
+
+/* INPUT */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: linear-gradient(to right, #1d4ed8, #0891b2);
+}
+
+/* ===== FORGOT PASSWORD ===== */
+.forgot-container {
+    text-align: right;
+    margin-top: 5px;
+}
+
+.forgot-link {
+    font-size: 13px;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard-container {
+    max-width: 1000px;   /* 🔥 increased */
+}
+
+/* ===== NOTES GRID ===== */
+.notes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+
+    background: white;
+    border-left: 6px solid #2563eb;
+    border-top: 3px solid #22c55e;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 15px;
+    color: #555;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.actions {
+    margin-top: 12px;
+}
+
+.actions a {
+    text-decoration: none;
+    padding: 6px 12px;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+/* VIEW */
+.actions a:nth-child(1) {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+/* EDIT */
+.actions a:nth-child(2) {
+    background: #fef9c3;
+    color: #92400e;
+}
+
+/* DELETE */
+.actions a:nth-child(3) {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* ===== ALERT ===== */
+.alert {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.success { background: #6de98a; }
+.danger { background:#70e78c; }
+.warning { background: #72f090; }
+.info { background:#74f191; }
+
+/* ===== FOOTER ===== */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(to right, #1f2937, #374151);
+    color: white;
+    margin-top: auto;
+}
+
+/* ===== WELCOME BUTTONS ===== */
+.start-btn {
+    display: inline-block;
+    padding: 12px 22px;
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.start-btn:hover {
+    background: linear-gradient(to right, #1d4ed8, #0891b2);
+}
+
+.dashboard-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #374151;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.dashboard-btn:hover {
+    background: #1f2937;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+
+    .form-box {
+        width: 100%;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-right {
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
+/* SEARCH BAR */
+#searchInput {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+
+    border-radius: 6px;
+    border: 1px solid #ccc;
+
+    font-size: 14px;
+}
+/* ===== SEARCH BUTTON ===== */
+.search-btn {
+    padding: 8px 16px;
+    background: #2563eb;   /* blue */
+    color: #fff;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* Hover */
+.search-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* ===== RESET BUTTON ===== */
+.reset-btn {
+    padding: 8px 16px;
+    background: #6b7280;   /* gray */
+    color: #fff;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* Hover */
+.reset-btn:hover {
+    background: #4b5563;
+    transform: translateY(-1px);
+}
+/* FIX SEARCH & RESET WIDTH */
+.search-btn,
+.reset-btn {
+    width: auto;          
+    min-width: 150px;      
+}
+/* CENTER BUTTONS */
+.btn-center {
+    display: flex;
+    justify-content: center;   
+    gap: 15px;                 
+    margin-top: 10px;
+}
+/* ===== FORGOT PASSWORD (LOGIN PAGE ONLY) ===== */
+.forgot-container {
+    width: 100%;
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.forgot-link {
+    font-size: 20px;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+    color: #1d4ed8;
+}
+/* ===== BACK BUTTON ===== */
+.back-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 16px;
+
+    background: linear-gradient(to right, #f30707, #000000);
+    color: white;
+
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.back-btn:hover {
+    background: linear-gradient(to right, #000000, #000000);
+    transform: translateX(-3px);   /* 🔥 slight move */
+}
+/* 📱 MOBILE */
+@media (max-width: 600px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    .form-box {
+        width: 100%;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-right {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    /* SEARCH STACK */
+    .search-row {
+        flex-direction: column;
+    }
+
+    .search-btn, .reset-btn {
+        width: 100%;
+    }
+
+    /* ACTION BUTTONS STACK */
+    .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .actions a {
+        display: block;
+        text-align: center;
+    }
+}
+
+/* 📲 TABLET */
+@media (max-width: 900px) {
+
+    .container {
+        padding: 20px;
+    }
+
+    .dashboard-container {
+        width: 100%;
+    }
+}

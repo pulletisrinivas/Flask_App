@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- ✅ NAVBAR -->
+<nav class="navbar">
+    <div class="nav-left">
+        <h2>📒 NotesApp</h2>
+    </div>
+
+    <div class="nav-right">
+        {% if session.get('user_id') %}
+            <span class="welcome">Welcome, {{session.name}}</span>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/addnote">Add Note</a>
+            <a href="/logout" class="logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- ✅ MAIN CONTENT -->
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, msg in messages %}
+            <div class="alert {{category}}">{{msg}}</div>
+        {% endfor %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</div>
+
+<!-- ✅ FOOTER -->
+<footer class="footer">
+    <p>© 2026 Notes Management System | Developed by Srinivas</p>
+</footer>
+
+</body>
+</html>

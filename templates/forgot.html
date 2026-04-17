@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="form-box">
+    <h2>Reset Password</h2>
+
+    <form method="POST">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <input type="password" name="password" placeholder="New Password" required>
+
+        <button type="submit">Reset Password</button>
+    </form>
+
+    <br>
+    <a href="/login">⬅ Back to Login</a>
+</div>
+
+{% endblock %}

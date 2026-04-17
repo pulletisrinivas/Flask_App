@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="form-box welcome-box">
+    <h2 style="color:red;">Welcome, {{session.username}}</h2><br>
+    <p>Create and manage your notes easily</p><br>
+
+    <a href="/addnote" class="start-btn">Create Your Note</a>
+    <br><br>
+    <a href="/dashboard" class="dashboard-btn">📒 Go to Dashboard</a>
+</div>
+
+{% endblock %}

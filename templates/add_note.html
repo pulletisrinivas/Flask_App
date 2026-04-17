@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="form-box">
+<h2>Add Note</h2>
+<form method="POST">
+    <input name="title" placeholder="Title" required>
+    <textarea name="content" placeholder="Write your note..." required></textarea>
+    <button>Add Note</button>
+</form>
+</div>
+
+{% endblock %}

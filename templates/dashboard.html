@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="dashboard-container">
+
+    <h2>Your Notes</h2>
+
+    <!-- 🔍 SEARCH BAR -->
+    <input type="text" id="searchInput" placeholder="🔍 Search notes...">
+
+    <div class="btn-center">
+    <button class="search-btn" onclick="searchNotes()">Search</button>
+    <button class="reset-btn" onclick="resetSearch()">Reset</button>
+</div>
+
+    <!-- ADD NOTE BUTTON -->
+    <a href="/addnote" class="start-btn">Add Note</a><br><br>
+
+    <!-- NOTES LIST -->
+    <div class="notes-grid">
+        {% for note in notes %}
+        <div class="card note-card">
+            <h3>{{note.title}}</h3>
+            <p>{{note.content}}</p>
+
+            <div class="actions">
+                <a href="/view/{{note.id}}">View</a>
+                <a href="/edit/{{note.id}}">Edit</a>
+                <a href="/delete/{{note.id}}">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- 🔧 SEARCH SCRIPT -->
+<script>
+function searchNotes() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let notes = document.getElementsByClassName("note-card");
+
+    for (let i = 0; i < notes.length; i++) {
+        let text = notes[i].innerText.toLowerCase();
+
+        if (text.includes(input)) {
+            notes[i].style.display = "block";
+        } else {
+            notes[i].style.display = "none";
+        }
+    }
+}
+
+function resetSearch() {
+    let input = document.getElementById("searchInput");
+    input.value = "";
+
+    let notes = document.getElementsByClassName("note-card");
+
+    for (let i = 0; i < notes.length; i++) {
+        notes[i].style.display = "block";
+    }
+}
+</script>
+
+{% endblock %}
