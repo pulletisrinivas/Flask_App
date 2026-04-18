@@ -15,7 +15,7 @@
 
     <div class="nav-right">
         {% if session.get('user_id') %}
-            <span class="welcome">Welcome, {{session.name}}</span>
+            <span class="welcome">Welcome {{ session.name }}</span>
             <a href="/dashboard">Dashboard</a>
             <a href="/addnote">Add Note</a>
             <a href="/logout" class="logout">Logout</a>

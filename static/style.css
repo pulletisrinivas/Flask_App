@@ -435,3 +435,150 @@ button:hover {
         width: 100%;
     }
 }
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1f2937;
+    padding: 15px 20px;
+    color: white;
+    flex-wrap: wrap;
+}
+
+.nav-right {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav-right a {
+    color: #e5e7eb;
+    text-decoration: none;
+}
+
+.logout {
+    background: red;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    flex: 1;
+    padding: 20px 40px;
+}
+
+/* ===== SEARCH ROW ===== */
+.search-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.search-row input {
+    flex: 1;
+    padding: 10px;
+}
+
+.search-btn, .reset-btn {
+    padding: 8px 12px;
+    width: auto;
+}
+
+/* ===== NOTES GRID ===== */
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* ===== CARD ===== */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    margin-bottom: 8px;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.actions {
+    margin-top: 10px;
+}
+
+.actions a {
+    margin-right: 5px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    text-align: center;
+    padding: 10px;
+    background: #1f2937;
+    color: white;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* 📱 MOBILE */
+@media (max-width: 600px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-right {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    /* SEARCH STACK */
+    .search-row {
+        flex-direction: column;
+    }
+
+    .search-btn, .reset-btn {
+        width: 100%;
+    }
+
+    /* SINGLE COLUMN */
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 📲 TABLET */
+@media (max-width: 900px) {
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+}
