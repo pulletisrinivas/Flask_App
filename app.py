@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash
-import mysql.connector
+import sqlite3
+import os
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -7,36 +8,61 @@ app.secret_key = "supersecretkey"
 
 # ---------------- DATABASE ----------------
 def get_db():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Sri2003@9",
-        database="notes"
-    )
+    db_path = os.path.join(os.getcwd(), "database.db")
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    return conn
 
-# ---------------- HOME (FIX ADDED) ----------------
+# ---------------- CREATE TABLES (AUTO) ----------------
+def init_db():
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        username TEXT,
+        email TEXT,
+        password TEXT
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS notes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT,
+        content TEXT,
+        user_id INTEGER,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
+    db.commit()
+
+init_db()
+
+# ---------------- HOME ----------------
 @app.route('/')
 def home():
-    return redirect('/login')   # 🔥 fixes Not Found
+    return redirect('/login')
 
 # ---------------- REGISTER ----------------
 @app.route('/register', methods=['GET','POST'])
 def register():
     if request.method == 'POST':
-        name = request.form['name']          # ✅ NEW
+        name = request.form['name']
         username = request.form['username']
         email = request.form['email']
         password = generate_password_hash(request.form['password'])
 
         db = get_db()
-        cursor = db.cursor(dictionary=True)
+        cursor = db.cursor()
 
-        # CHECK USERNAME
-        cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
+        cursor.execute("SELECT * FROM users WHERE username=?", (username,))
         user = cursor.fetchone()
 
-        # CHECK EMAIL
-        cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
+        cursor.execute("SELECT * FROM users WHERE email=?", (email,))
         mail = cursor.fetchone()
 
         if user:
@@ -44,9 +70,8 @@ def register():
         elif mail:
             flash("Email already registered", "danger")
         else:
-            cursor = db.cursor()
             cursor.execute(
-                "INSERT INTO users(name, username, email, password) VALUES(%s,%s,%s,%s)",
+                "INSERT INTO users(name, username, email, password) VALUES(?,?,?,?)",
                 (name, username, email, password)
             )
             db.commit()
@@ -56,62 +81,64 @@ def register():
 
     return render_template('register.html')
 
-# ---------------- FORGOT PASSWORD ----------------
-@app.route('/forgot', methods=['GET', 'POST'])
-def forgot():
-    if request.method == 'POST':
-        email = request.form['email']
-        new_password = request.form['password']
-
-        db = get_db()
-        cursor = db.cursor()
-
-        hashed_password = generate_password_hash(new_password)
-
-        cursor.execute(
-            "UPDATE users SET password=%s WHERE email=%s",
-            (hashed_password, email)
-        )
-        db.commit()
-
-        flash("Password updated successfully. Please login.", "success")
-        return redirect('/login')
-
-    return render_template('forgot.html')
-
 # ---------------- LOGIN ----------------
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
 
         db = get_db()
-        cursor = db.cursor(dictionary=True)
+        cursor = db.cursor()
 
-        cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
+        cursor.execute("SELECT * FROM users WHERE email=?", (email,))
         user = cursor.fetchone()
 
         if user and check_password_hash(user['password'], password):
             session['user_id'] = user['id']
             session['username'] = user['username']
-            session['name'] = user['name']   # ✅ ADD THIS LINE
+            session['name'] = user['name'] or user['username']
 
-            flash(f"Welcome {user['username']}! Login successful", "success")
-
+            flash(f"Welcome {session['name']}!", "success")
             return redirect('/welcome')
         else:
             flash("Invalid email or password", "danger")
-            return redirect('/login')
 
     return render_template('login.html')
+
+# ---------------- LOGOUT ----------------
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash("Logged out successfully", "info")
+    return redirect('/login')
+
+# ---------------- FORGOT PASSWORD ----------------
+@app.route('/forgot', methods=['GET','POST'])
+def forgot():
+    if request.method == 'POST':
+        email = request.form['email']
+        new_password = generate_password_hash(request.form['password'])
+
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute(
+            "UPDATE users SET password=? WHERE email=?",
+            (new_password, email)
+        )
+        db.commit()
+
+        flash("Password updated successfully", "success")
+        return redirect('/login')
+
+    return render_template('forgot.html')
 
 # ---------------- WELCOME ----------------
 @app.route('/welcome')
 def welcome():
     if 'user_id' not in session:
         return redirect('/login')
-
     return render_template('welcome.html')
 
 # ---------------- DASHBOARD ----------------
@@ -121,10 +148,10 @@ def dashboard():
         return redirect('/login')
 
     db = get_db()
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
 
     cursor.execute(
-        "SELECT * FROM notes WHERE user_id=%s ORDER BY created_at DESC",
+        "SELECT * FROM notes WHERE user_id=? ORDER BY created_at DESC",
         (session['user_id'],)
     )
     notes = cursor.fetchall()
@@ -145,7 +172,7 @@ def addnote():
         cursor = db.cursor()
 
         cursor.execute(
-            "INSERT INTO notes(title,content,user_id) VALUES(%s,%s,%s)",
+            "INSERT INTO notes(title, content, user_id) VALUES(?,?,?)",
             (title, content, session['user_id'])
         )
         db.commit()
@@ -162,9 +189,9 @@ def view(id):
         return redirect('/login')
 
     db = get_db()
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
 
-    cursor.execute("SELECT * FROM notes WHERE id=%s", (id,))
+    cursor.execute("SELECT * FROM notes WHERE id=?", (id,))
     note = cursor.fetchone()
 
     if not note or note['user_id'] != session['user_id']:
@@ -179,9 +206,9 @@ def edit(id):
         return redirect('/login')
 
     db = get_db()
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
 
-    cursor.execute("SELECT * FROM notes WHERE id=%s",(id,))
+    cursor.execute("SELECT * FROM notes WHERE id=?", (id,))
     note = cursor.fetchone()
 
     if not note or note['user_id'] != session['user_id']:
@@ -192,7 +219,7 @@ def edit(id):
         content = request.form['content']
 
         cursor.execute(
-            "UPDATE notes SET title=%s, content=%s WHERE id=%s",
+            "UPDATE notes SET title=?, content=? WHERE id=?",
             (title, content, id)
         )
         db.commit()
@@ -202,35 +229,26 @@ def edit(id):
 
     return render_template('edit_note.html', note=note)
 
-# ---------------- DELETE ----------------
+# ---------------- DELETE NOTE ----------------
 @app.route('/delete/<int:id>')
 def delete(id):
     if 'user_id' not in session:
         return redirect('/login')
 
     db = get_db()
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
 
-    cursor.execute("SELECT * FROM notes WHERE id=%s",(id,))
+    cursor.execute("SELECT * FROM notes WHERE id=?", (id,))
     note = cursor.fetchone()
 
     if not note or note['user_id'] != session['user_id']:
         return "Unauthorized Access"
 
-    cursor.execute("DELETE FROM notes WHERE id=%s",(id,))
+    cursor.execute("DELETE FROM notes WHERE id=?", (id,))
     db.commit()
 
     flash("Note Deleted", "warning")
     return redirect('/dashboard')
-
-# ---------------- LOGOUT ----------------
-@app.route('/logout')
-def logout():
-    session.clear()
-
-    flash("Logged out successfully", "info")
-
-    return redirect('/login')
 
 # ---------------- RUN ----------------
 if __name__ == "__main__":
