@@ -602,12 +602,12 @@ body {
     }
 
     .nav-right a {
-        font-size: 12px;                  /* reduce size for mobile */
+        font-size: 10px;                  /* reduce size for mobile */
         padding: 4px 6px;
     }
 
     .nav-right span {
-        font-size: 12px;
+        font-size: 10px;
         padding: 4px 8px;
         max-width: 110px;                 /* prevent long email breaking */
         overflow: hidden;
@@ -616,6 +616,6 @@ body {
     }
 
     .navbar h2 {
-        font-size: 16px;                  /* smaller title */
+        font-size: 14px;                  /* smaller title */
     }
 }
