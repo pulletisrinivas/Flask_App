@@ -38,7 +38,7 @@ body {
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 10px;
 }
 
 .nav-right span {
@@ -85,7 +85,7 @@ body {
     background: white;
     padding: 35px;
     border-radius: 10px;
-    
+
     width: 600px;          /* 🔥 increased */
     max-width: 90%;
 
@@ -330,14 +330,14 @@ button:hover {
 /* FIX SEARCH & RESET WIDTH */
 .search-btn,
 .reset-btn {
-    width: auto;          
-    min-width: 150px;      
+    width: auto;
+    min-width: 150px;
 }
 /* CENTER BUTTONS */
 .btn-center {
     display: flex;
-    justify-content: center;   
-    gap: 15px;                 
+    justify-content: center;
+    gap: 15px;
     margin-top: 10px;
 }
 /* ===== FORGOT PASSWORD (LOGIN PAGE ONLY) ===== */
@@ -398,7 +398,7 @@ button:hover {
     }
 
     .nav-right {
-        width: 100%;
+        width: 50%;
         justify-content: flex-start;
     }
 
@@ -580,5 +580,42 @@ body {
 
     .notes-grid {
         grid-template-columns: 1fr;
+    }
+}
+/* 🔥 NAVBAR FIX FOR MOBILE (ADD THIS AT END ONLY) */
+@media (max-width: 600px) {
+
+    .navbar {
+        flex-direction: row !important;   /* keep in one line */
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;                /* prevent breaking */
+    }
+
+    .nav-right {
+        display: flex;
+        flex-direction: row !important;
+        align-items: center;
+        gap: 8px;
+        width: auto !important;
+        flex-wrap: nowrap;                /* prevent moving down */
+    }
+
+    .nav-right a {
+        font-size: 12px;                  /* reduce size for mobile */
+        padding: 4px 6px;
+    }
+
+    .nav-right span {
+        font-size: 12px;
+        padding: 4px 8px;
+        max-width: 110px;                 /* prevent long email breaking */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .navbar h2 {
+        font-size: 16px;                  /* smaller title */
     }
 }
